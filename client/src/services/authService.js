@@ -9,7 +9,7 @@ export const userRegistration = async (email, password, role) => {
 }
 
 export const userAllowResetPassword = async (email) => {
-    return api.post('/allowResetPassword', { email })
+    return api.get('/allowResetPassword', { email })
 }
 
 export const userResetPassword = async (email, password) => {

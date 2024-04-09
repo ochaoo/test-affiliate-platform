@@ -54,7 +54,7 @@ class UserController {
             if (!candidate) {
                 return res.json({ status: false })
             }
-
+            console.log(candidate.resetPasswordLink)
             await mailService.sendResetPassword(email, `${process.env.API_URL}/reset/${candidate.resetPasswordLink}`)
             return res.json({ status: true })
         } catch (e) {

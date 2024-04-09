@@ -14,6 +14,6 @@ router.post('/logout', userController.logout)
 router.get('/reset/:link', userController.toResetPassword)
 router.get('/refresh', userController.refresh)
 router.get('/allowResetPassword', userController.allowResetPassword)
-router.get('/resetPassword', userController.resetPassword)
+router.post('/resetPassword', userController.resetPassword)
 
 module.exports = router

@@ -47,19 +47,15 @@ export const allowResetPassword = createAsyncThunk(
     'users/allowResetPassword',
     async (userData, { rejectWithValue, dispatch }) => {
         try {
-            const { email } = userData
-            const response = await userAllowResetPassword(email, password)
+            const response = await userAllowResetPassword(userData)
 
-            if (!response.ok) {
-                throw new Error('Registration error.')
+            if (response.data.status) {
+                dispatch(setStatus('resolved'))
+                return true
             }
 
-            console.log(response)
-            localStorage.setItem('token', response.data.accessToken)
-
-            dispatch(setAuth(true))
-            dispatch(setUser(response.data.user))
-            dispatch(setStatus('resolved'))
+            dispatch(setStatus('rejected'))
+            return false
         } catch (error) {
             return rejectWithValue(error.message)
         }

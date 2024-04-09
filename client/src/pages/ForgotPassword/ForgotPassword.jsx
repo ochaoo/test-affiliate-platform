@@ -1,12 +1,17 @@
 import OurButton from '../../components/Button/OurButton'
-import { useNavigate } from 'react-router-dom'
 import { Input, Form } from 'antd'
+import { allowResetPassword } from '../../store/usersSlice'
+import { useDispatch } from 'react-redux'
 
 import './style.scss'
 
 const ForgotPassword = () => {
-    const onFinish = (values) => {
+    const dispatch = useDispatch()
+
+    const onFinish = async (values) => {
         console.log('Received values of form: ', values)
+        const allow = await dispatch(allowResetPassword(values.email))
+        console.log(allow)
     }
 
     return (
