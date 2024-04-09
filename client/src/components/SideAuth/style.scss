@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.side-auth {
+    width: 50%;
+    height: calc(100% + 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $verticalBackgroundGradient;
+    color: white;
+    border-bottom-left-radius: 150px;
+
+    h1 {
+        font-size: 96px;
+    }
+}
