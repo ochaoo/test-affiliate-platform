@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import './style.scss'
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
     const dispatch = useDispatch()
 
     const onFinish = async (values) => {
@@ -17,19 +17,15 @@ const ForgotPassword = () => {
             <h3>Please enter your email address below and we'll send you a link to reset your password</h3>
             <Form onFinish={onFinish}>
                 <Form.Item
-                    name="email"
+                    name="password"
                     rules={[
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!'
-                        },
-                        {
-                            required: true,
-                            message: 'Please input your E-mail!'
-                        }
+                        { required: true, message: 'Please input your Password!' },
+                        { min: 8, message: 'Password must be at least 8 characters' },
+                        { max: 20, message: 'Password must be less than 20 characters' }
                     ]}
+                    style={{ marginBottom: '5px' }}
                 >
-                    <Input style={{ borderRadius: '15px', width: '300px' }} placeholder="E-mail" size="large" />
+                    <Input.Password style={{ borderRadius: '15px' }} placeholder="Password" size="large" />
                 </Form.Item>
 
                 <Form.Item>
@@ -42,4 +38,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword
+export default ResetPassword
