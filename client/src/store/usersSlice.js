@@ -7,7 +7,7 @@ export const login = createAsyncThunk('users/userLogin', async (userData, { reje
         const { email, password } = userData
         const response = await userLogin(email, password)
 
-        if (!response.ok) {
+        if (!response.statusText === 'OK') {
             throw new Error('Login Error!')
         }
 
@@ -25,14 +25,14 @@ export const login = createAsyncThunk('users/userLogin', async (userData, { reje
 
 export const registration = createAsyncThunk('users/userRegistration', async (userData, { rejectWithValue, dispatch }) => {
     try {
-        const { email, password } = userData
-        const response = await userRegistration(email, password)
+        const { email, password, role } = userData
 
-        if (!response.ok) {
+        const response = await userRegistration(email, password, role)
+
+        if (!response.statusText === 'OK') {
             throw new Error('Registration error.')
         }
 
-        console.log(response)
         localStorage.setItem('token', response.data.accessToken)
 
         dispatch(setAuth(true))
@@ -67,7 +67,7 @@ export const resetPassword = createAsyncThunk('users/resetPassword', async (user
         const { email, password } = userData
         const response = await userResetPassword(email, password)
 
-        if (!response.ok) {
+        if (!response.statusText === 'OK') {
             throw new Error('Registration error.')
         }
 
@@ -86,7 +86,7 @@ export const logout = createAsyncThunk('users/userLogout', async (_, { rejectWit
     try {
         const response = await userLogout()
 
-        if (!response.ok) {
+        if (!response.statusText === 'OK') {
             throw new Error('Logout error.')
         }
 
@@ -104,13 +104,12 @@ export const checkAuth = createAsyncThunk('users/checkAuth', async (_, { rejectW
     try {
         const response = await axios.get(`${process.env.API_URL}/refresh`, { withCredentials: true })
 
-        if (!response.ok) {
+        if (!response.statusText === 'OK') {
             dispatch(setAuth(false))
             dispatch(setUser({}))
             dispatch(setStatus('resolved'))
         }
 
-        console.log(response)
         localStorage.setItem('token', response.data.accessToken)
 
         dispatch(setAuth(true))
@@ -166,6 +165,6 @@ const usersSlice = createSlice({
     }
 })
 
-export const { setAuth, setUser } = usersSlice.actions
+export const { setAuth, setUser, setStatus } = usersSlice.actions
 
 export default usersSlice.reducer

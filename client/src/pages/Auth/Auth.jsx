@@ -9,17 +9,24 @@ import SideAuth from '../../components/SideAuth/SideAuth'
 import FooterAuth from '../../components/FooterAuth/FooterAuth'
 import { Checkbox, Form, Input } from 'antd'
 import OurButton from '../../components/Button/OurButton'
+import { registration, login } from '../../store/usersSlice'
+import { useDispatch } from 'react-redux'
 
 import './style.scss'
 
 const Auth = () => {
+    const dispatch = useDispatch()
     const location = useLocation()
     const isLogin = location.pathname === BRAND_LOGIN_ROUTE || location.pathname === AFFILIATE_LOGIN_ROUTE
     const isBrand = location.pathname === BRAND_REGISTRATION_ROUTE || location.pathname === BRAND_LOGIN_ROUTE
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
+        if (isLogin) {
+            return await dispatch(login({ email: values.email, password: values.password }))
+        }
+
         values.role = isBrand ? 'brand' : 'affiliate'
-        console.log('Received values of form: ', values)
+        const allow = await dispatch(registration({ email: values.email, role: values.role, password: values.password }))
     }
 
     return (

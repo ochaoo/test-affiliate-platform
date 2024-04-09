@@ -9,9 +9,7 @@ const ForgotPassword = () => {
     const dispatch = useDispatch()
 
     const onFinish = async (values) => {
-        console.log('Received values of form: ', values)
         const allow = await dispatch(allowResetPassword(values.email))
-        console.log(allow)
     }
 
     return (
