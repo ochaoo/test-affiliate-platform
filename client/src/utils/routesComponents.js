@@ -20,17 +20,28 @@ import {
     AFFILIATE_OFFERS_ROUTE,
     AFFILIATE_OFFERS_IN_THE_WORKS_ROUTE,
     AFFILIATE_SUPPORT_ROUTE,
-    FORGOT_PASSWORD_ROUTE
+    FORGOT_PASSWORD_ROUTE,
+    RESET_PASSWORD_ROUTE
 } from './constRoutes'
 import Main from '../pages/Main/Main'
 import ManagerAuth from '../pages/ManagerAuth/ManagerAuth'
 import Auth from '../pages/Auth/Auth'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
+import ResetPassword from '../pages/ResetPassword/ResetPassword'
+import Profile from '../pages/Profile/Profile'
 
 export const authRoutes = [
     {
-        // path: MY_WEDDING_ROUTE,
-        // Component: MyWedding
+        path: MANAGER_PROFILE_ROUTE,
+        Component: Profile
+    },
+    {
+        path: BRAND_PROFILE_ROUTE,
+        Component: Profile
+    },
+    {
+        path: AFFILIATE_PROFILE_ROUTE,
+        Component: Profile
     }
 ]
 
@@ -66,5 +77,9 @@ export const publicRoutes = [
     {
         path: FORGOT_PASSWORD_ROUTE,
         Component: ForgotPassword
+    },
+    {
+        path: RESET_PASSWORD_ROUTE,
+        Component: ResetPassword
     }
 ]

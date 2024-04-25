@@ -1,18 +1,26 @@
-import { useLocation } from 'react-router-dom'
-import { MANAGER_LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from '../../utils/constRoutes'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { MANAGER_LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE, MANAGER_PROFILE_ROUTE } from '../../utils/constRoutes'
 import SideAuth from '../../components/SideAuth/SideAuth'
 import FooterAuth from '../../components/FooterAuth/FooterAuth'
 import { Checkbox, Form, Input } from 'antd'
 import OurButton from '../../components/Button/OurButton'
 import { registration, login } from '../../store/usersSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './style.scss'
+import { useEffect } from 'react'
 
 const ManagerAuth = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
     const isLogin = location.pathname === MANAGER_LOGIN_ROUTE
+
+    const isAuth = useSelector((state) => state.users.isAuth)
+
+    useEffect(() => {
+        if (isAuth) navigate(MANAGER_PROFILE_ROUTE)
+    }, [isAuth])
     const onFinish = async (values) => {
         if (isLogin) {
             return await dispatch(login({ email: values.email, password: values.password })).unwrap()

@@ -11,8 +11,6 @@ export const login = createAsyncThunk('users/userLogin', async (userData, { reje
             throw new Error('Login Error!')
         }
 
-        console.log(response.data)
-
         localStorage.setItem('token', response.data.accessToken)
 
         dispatch(setAuth(true))
@@ -71,7 +69,6 @@ export const resetPassword = createAsyncThunk('users/resetPassword', async (user
             throw new Error('Registration error.')
         }
 
-        console.log(response)
         localStorage.setItem('token', response.data.accessToken)
 
         dispatch(setAuth(true))
