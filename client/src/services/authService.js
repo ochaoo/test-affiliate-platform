@@ -9,7 +9,7 @@ export const userRegistration = async (email, password, role) => {
 }
 
 export const userAllowResetPassword = async (email) => {
-    return api.get('/allowResetPassword', { email })
+    return api.get('/allowResetPassword', { params: { email } })
 }
 
 export const userResetPassword = async (email, password) => {

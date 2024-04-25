@@ -2,7 +2,10 @@ import axios from 'axios'
 
 const api = axios.create({
     withCredentials: true,
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: import.meta.env.VITE_API_URL,
+    httpsAgent: {
+        rejectUnauthorized: false
+    }
 })
 
 api.interceptors.request.use((config) => {

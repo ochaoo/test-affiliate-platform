@@ -13,7 +13,7 @@ router.post('/login', [body('email').isEmail(), body('password').isLength({ min:
 router.post('/logout', userController.logout)
 router.get('/reset/:link', userController.toResetPassword)
 router.get('/refresh', userController.refresh)
-router.get('/allowResetPassword', userController.allowResetPassword)
+router.get('/allowResetPassword', body('email').isEmail(), userController.allowResetPassword)
 router.post('/resetPassword', userController.resetPassword)
 
 module.exports = router

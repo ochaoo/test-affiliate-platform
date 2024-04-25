@@ -1,4 +1,4 @@
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import {
     BRAND_REGISTRATION_ROUTE,
     BRAND_LOGIN_ROUTE,
@@ -22,11 +22,11 @@ const Auth = () => {
 
     const onFinish = async (values) => {
         if (isLogin) {
-            return await dispatch(login({ email: values.email, password: values.password }))
+            return await dispatch(login({ email: values.email, password: values.password })).unwrap()
         }
 
         values.role = isBrand ? 'brand' : 'affiliate'
-        const allow = await dispatch(registration({ email: values.email, role: values.role, password: values.password }))
+        await dispatch(registration({ email: values.email, role: values.role, password: values.password })).unwrap()
     }
 
     return (
@@ -66,6 +66,35 @@ const Auth = () => {
                             >
                                 <Input.Password style={{ borderRadius: '15px' }} placeholder="Password" size="large" />
                             </Form.Item>
+
+                            {!isLogin && (
+                                <>
+                                    <p>Confirm password</p>
+                                    <Form.Item
+                                        name="confirm"
+                                        dependencies={['password']}
+                                        hasFeedback
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please confirm your password!'
+                                            },
+                                            ({ getFieldValue }) => ({
+                                                validator(_, value) {
+                                                    if (!value || getFieldValue('password') === value) {
+                                                        return Promise.resolve()
+                                                    }
+                                                    return Promise.reject(
+                                                        new Error('The new password that you entered do not match!')
+                                                    )
+                                                }
+                                            })
+                                        ]}
+                                    >
+                                        <Input.Password style={{ borderRadius: '15px' }} placeholder="Password" size="large" />
+                                    </Form.Item>
+                                </>
+                            )}
 
                             {isLogin && (
                                 <div className="link">

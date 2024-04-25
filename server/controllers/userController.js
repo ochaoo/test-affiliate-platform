@@ -2,6 +2,7 @@ const userService = require('../service/userService')
 const { validationResult } = require('express-validator')
 const ApiError = require('../exceptions/apiError')
 const UserModel = require('../models/userModel')
+const mailService = require('../service/mailService')
 
 class UserController {
     async registration(req, res, next) {
@@ -49,12 +50,14 @@ class UserController {
 
     async allowResetPassword(req, res, next) {
         try {
-            const { email } = req.body
+            const { email } = req.query
+
             const candidate = await UserModel.findOne({ email })
+
             if (!candidate) {
                 return res.json({ status: false })
             }
-            console.log(candidate.resetPasswordLink)
+
             await mailService.sendResetPassword(email, `${process.env.API_URL}/reset/${candidate.resetPasswordLink}`)
             return res.json({ status: true })
         } catch (e) {

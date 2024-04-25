@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     const dispatch = useDispatch()
 
     const onFinish = async (values) => {
-        const allow = await dispatch(allowResetPassword(values.email))
+        const allow = await dispatch(allowResetPassword(values.email)).unwrap()
     }
 
     return (

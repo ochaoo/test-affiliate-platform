@@ -7,7 +7,7 @@ const UserSchema = new Schema(
         role: { type: String, required: true },
         resetPasswordLink: { type: String }
     },
-    { timestamps: false, collection: 'users' }
+    { timestamps: false, collection: 'users', versionKey: false }
 )
 
 module.exports = model('User', UserSchema)
